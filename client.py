@@ -1,6 +1,10 @@
 import socket
-s = socket.socket(socket.AF_UNIX)
+with socket.socket(socket.AF_UNIX) as s:
+  s.connect('test.sock')
+  s.sendall(b'free -m')
+  data = s.recv(1024)
+  print(data.decode("utf-8"))
 
-s.connect('test.sock')
-msg = s.recv(1024)
-print(msg.decode("utf-8"))
+# s.connect('test.sock')
+# msg = s.recv(1024)
+
